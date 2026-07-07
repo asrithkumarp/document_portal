@@ -54,7 +54,7 @@ if __name__=="__main__":
     from pathlib import Path
     from io import BytesIO
     
-    pdf_path=r"C:\\Users\\asrit\\OneDrive\\Desktop\\Programming\\DBMS\\Unit-6.pdf"
+    pdf_path=r"D:\\LLMOPS-Projects\\document_portal\\data\\document_analysis\\NIPS-2017-attention-is-all-you-need-Paper.pdf"
     class DummyFile:
         def __init__(self,file_path):
             self.name=Path(file_path).name
