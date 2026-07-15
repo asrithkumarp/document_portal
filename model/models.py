@@ -1,5 +1,6 @@
-from pydantic import BaseModel,Field,RootModel
-from typing import Optional,List,Dict,Any,Union
+from pydantic import BaseModel, RootModel
+from typing import List, Union
+from enum import Enum
 
 class Metadata(BaseModel):
     Summary: List[str]
@@ -14,7 +15,13 @@ class Metadata(BaseModel):
 
 class ChangeFormat(BaseModel):
     Page:str
-    changes:str
+    Changes:str
 
 class SummaryResponse(RootModel[list[ChangeFormat]]):
     pass
+
+class PromptType(str, Enum):
+    DOCUMENT_ANALYSIS = "document_analysis"
+    DOCUMENT_COMPARISON = "document_comparison"
+    CONTEXTUALIZE_QUESTION = "contextualize_question"
+    CONTEXT_QA = "context_qa"
