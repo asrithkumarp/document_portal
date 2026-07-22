@@ -6,6 +6,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings,ChatGoogleGenera
 from langchain_groq import ChatGroq
 from logger.custom_logger import CustomLogger
 from exception.custom_exception import DocumentPortalException
+from langchain_huggingface import HuggingFaceEmbeddings
 log=CustomLogger().get_logger(__name__)
 
 class ModelLoader:
@@ -27,8 +28,18 @@ class ModelLoader:
     def load_embeddings(self):
         try:
             log.info("Loading embedding model.....")
+            provider = self.config["embedding_model"]["provider"]
             model_name=self.config["embedding_model"]["model_name"]
-            return GoogleGenerativeAIEmbeddings(model=model_name)
+            if provider == "google":
+                return GoogleGenerativeAIEmbeddings(model=model_name)
+
+            elif provider == "huggingface":
+                return HuggingFaceEmbeddings(
+                    model_name=model_name
+                )
+
+            else:
+                raise ValueError(f"Unsupported embedding provider: {provider}")
         except Exception as e:
             log.error("Error loading embedding model",error=str(e))
             raise DocumentPortalException("Failed to load embedding model",sys)
